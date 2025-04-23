@@ -18,25 +18,25 @@ const INFO_CARDS: Array<{
   description: string;
   icon: 'litecoin' | 'check' | 'clock';
 }> = [
-  {
-    title: "Network Fee",
-    value: "~0.001 LTC",
-    description: "Average transaction fee",
-    icon: "litecoin",
-  },
-  {
-    title: "Confirmations",
-    value: "2 required",
-    description: "For payment verification",
-    icon: "check",
-  },
-  {
-    title: "Processing",
-    value: "~2.5 min",
-    description: "Average confirmation time",
-    icon: "clock",
-  }
-]
+    {
+      title: "Network Fee",
+      value: "~0.001 LTC",
+      description: "Average transaction fee",
+      icon: "litecoin",
+    },
+    {
+      title: "Confirmations",
+      value: "2 required",
+      description: "For payment verification",
+      icon: "check",
+    },
+    {
+      title: "Processing",
+      value: "~2.5 min",
+      description: "Average confirmation time",
+      icon: "clock",
+    }
+  ]
 
 // Components
 const LitecoinIcon = ({ className = "h-6 w-6" }) => (
@@ -182,7 +182,7 @@ const InfoCard = ({ title, value, description, icon }: InfoCardProps) => (
 
 interface SubmitButtonProps {
   formState: 'idle' | 'loading' | 'success' | 'error';
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit: () => void;
 }
 
 const SubmitButton = ({ formState, handleSubmit }: SubmitButtonProps) => (
@@ -191,6 +191,7 @@ const SubmitButton = ({ formState, handleSubmit }: SubmitButtonProps) => (
       <motion.button
         key="submit"
         type="submit"
+        onClick={handleSubmit}
         className="relative w-full py-3 px-4 bg-teal-500 text-white font-medium rounded-lg overflow-hidden group disabled:opacity-70"
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
@@ -417,7 +418,7 @@ export default function Page() {
               transition={{ duration: 0.3, delay: 0.6 }}
               className="pt-4"
             >
-              <SubmitButton formState={formState} handleSubmit={handleSubmit} />
+              <SubmitButton formState={formState} handleSubmit={() => handleSubmit} />
             </motion.div>
           </form>
         </motion.div>
