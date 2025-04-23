@@ -271,7 +271,7 @@ export default function Page() {
       setTimeout(() => {
         router.push(`/${id}`)
       }, 1000)
-    } catch (error) {
+    } catch {
       setFormState('error')
       setTimeout(() => setFormState('idle'), 3000)
     }

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Clock, Copy, Check, QrCode, AlertTriangle } from 'lucide-react'
+import { Clock, Copy, Check, AlertTriangle } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
 
 const API = process.env.NEXT_PUBLIC_API_URL
@@ -21,30 +21,28 @@ const LitecoinIcon = ({ className = "h-6 w-6" }) => (
     </svg>
 )
 
+interface PaymentData {
+    id: string | string[];
+    amount: string;
+    usdAmount: string;
+    address: string;
+    status: string;
+    created_at: string | number | Date;
+    expires_at: string | number | Date;
+    received: string;
+    confirmations: number;
+}
+
 export default function Page() {
     const { id } = useParams()
-    const [data, setData] = useState(null)
+    const [data, setData] = useState<PaymentData | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const [copied, setCopied] = useState(false)
     const [lastRefresh, setLastRefresh] = useState(0)
     const [refreshPulse, setRefreshPulse] = useState(false)
 
-    const formatDate = (timestamp) => {
-        if (!timestamp) return ''
-        const date = new Date(timestamp)
-        return new Intl.DateTimeFormat('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true
-        }).format(date)
-    }
-
-    const getTimeData = (created_at, expires_at) => {
+    const getTimeData = (created_at: string | number | Date, expires_at: string | number | Date) => {
         if (!created_at || !expires_at) {
             console.log('Missing date values:', { created_at, expires_at })
             return {
@@ -113,7 +111,7 @@ export default function Page() {
         }
     }
 
-    const getStatusDetails = (status) => {
+    const getStatusDetails = (status: string | null) => {
         if (!status) return {
             color: '#737373',
             bgColor: 'rgba(0, 0, 0, 0.5)',
@@ -153,7 +151,7 @@ export default function Page() {
         }
     }
 
-    const copyToClipboard = (text) => {
+    const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
@@ -352,7 +350,7 @@ export default function Page() {
                                 </div>
                                 <div>
                                     <h2 className="text-lg font-semibold text-red-500 mb-2">Error Loading Payment</h2>
-                                    <p className="text-gray-400 mb-4">We couldn't load the payment details. Please check the payment ID and try again.</p>
+                                    <p className="text-gray-400 mb-4">We couldn&apos;t load the payment details. Please check the payment ID and try again.</p>
                                 </div>
                             </div>
                         </motion.div>
