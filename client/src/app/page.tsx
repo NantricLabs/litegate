@@ -12,7 +12,12 @@ const EXPIRATION_OPTIONS = [
   { label: "24h", value: "86400" },
   { label: "Never", value: "0" }
 ]
-const INFO_CARDS = [
+const INFO_CARDS: Array<{
+  title: string;
+  value: string;
+  description: string;
+  icon: 'litecoin' | 'check' | 'clock';
+}> = [
   {
     title: "Network Fee",
     value: "~0.001 LTC",
@@ -147,7 +152,14 @@ const BackgroundDecoration = () => (
   </div>
 )
 
-const InfoCard = ({ title, value, description, icon }: any) => (
+interface InfoCardProps {
+  title: string;
+  value: string;
+  description: string;
+  icon: 'litecoin' | 'check' | 'clock';
+}
+
+const InfoCard = ({ title, value, description, icon }: InfoCardProps) => (
   <motion.div
     className="bg-black/30 backdrop-blur-md rounded-xl border border-white/5 p-4 shadow-lg"
     initial={{ y: 20, opacity: 0 }}
@@ -168,13 +180,17 @@ const InfoCard = ({ title, value, description, icon }: any) => (
   </motion.div>
 )
 
-const SubmitButton = ({ formState, handleSubmit }: any) => (
+interface SubmitButtonProps {
+  formState: 'idle' | 'loading' | 'success' | 'error';
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const SubmitButton = ({ formState, handleSubmit }: SubmitButtonProps) => (
   <AnimatePresence mode="wait">
     {formState === 'idle' && (
       <motion.button
         key="submit"
         type="submit"
-        onClick={handleSubmit}
         className="relative w-full py-3 px-4 bg-teal-500 text-white font-medium rounded-lg overflow-hidden group disabled:opacity-70"
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.99 }}
@@ -247,7 +263,7 @@ const SubmitButton = ({ formState, handleSubmit }: any) => (
 export default function Page() {
   const [amount, setAmount] = useState('')
   const [ttl, setTtl] = useState('3600')
-  const [formState, setFormState] = useState('idle')
+  const [formState, setFormState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
