@@ -48,7 +48,7 @@ const LitecoinIcon = ({ className = "h-6 w-6" }) => (
   </svg>
 )
 
-const InfoTooltip = ({ text }) => (
+const InfoTooltip = ({ text }: { text: string }) => (
   <div className="relative group ml-2">
     <Info className="h-4 w-4 text-gray-400" />
     <motion.div
@@ -147,7 +147,7 @@ const BackgroundDecoration = () => (
   </div>
 )
 
-const InfoCard = ({ title, value, description, icon }) => (
+const InfoCard = ({ title, value, description, icon }: any) => (
   <motion.div
     className="bg-black/30 backdrop-blur-md rounded-xl border border-white/5 p-4 shadow-lg"
     initial={{ y: 20, opacity: 0 }}
@@ -168,7 +168,7 @@ const InfoCard = ({ title, value, description, icon }) => (
   </motion.div>
 )
 
-const SubmitButton = ({ formState, handleSubmit }) => (
+const SubmitButton = ({ formState, handleSubmit }: any) => (
   <AnimatePresence mode="wait">
     {formState === 'idle' && (
       <motion.button
@@ -250,7 +250,7 @@ export default function Page() {
   const [formState, setFormState] = useState('idle')
   const router = useRouter()
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setFormState('loading')
 
